@@ -31,7 +31,7 @@ def main():
     vader = SentimentIntensityAnalyzer()
 
     # get a list of all diary entries
-    for root, dirs, files in os.walk('/home/sofi/diary/2022/'):
+    for root, dirs, files in os.walk(diary_path):
         for name in files:
             if name.endswith('.md'):
                 entries.append(os.path.join(root, name))
