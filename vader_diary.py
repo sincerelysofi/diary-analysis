@@ -14,13 +14,13 @@ def get_emoji(score):
     else:
         return ':|'
 
-def get_sentiment(path):
+def get_sentiment(path, model):
     """
     opens the entry at the given path and gets its score
     """
     with open(path, 'r') as f:
         a = f.read()
-        score = vader.polarity_scores(a)['compound']
+        score = model.polarity_scores(a)['compound']
         return get_emoji(score), score
 
 def main():
@@ -42,7 +42,7 @@ def main():
     for entry in entries:
         print(f'reading {entry}...')
 
-        emoji, score = get_sentiment(entry)
+        emoji, score = get_sentiment(entry, vader)
         print(f'\trated: {emoji} ({score})')
 
         emoji_list.append(emoji)
@@ -54,3 +54,5 @@ def main():
     for sentiment in emoji_count:
         print(f'{emoji_count[sentiment]} entries rated {sentiment}')
 
+if __name__ == '__main__':
+    main()
