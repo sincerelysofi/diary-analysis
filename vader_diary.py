@@ -1,5 +1,7 @@
 import os
+from statistics import mean
 from collections import Counter
+from nltk.tokenize import sent_tokenize
 from nltk.sentiment import vader
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
@@ -20,7 +22,8 @@ def get_sentiment(path, model):
     """
     with open(path, 'r') as f:
         a = f.read()
-        score = model.polarity_scores(a)['compound']
+        sentences = sent_tokenize(a)
+        score = mean([model.polarity_scores(s)['compound'] for s in sentences])
         return get_emoji(score), score
 
 def main():
